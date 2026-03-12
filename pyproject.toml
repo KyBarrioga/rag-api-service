@@ -5,6 +5,7 @@ description = "Dependency scaffold for a LlamaIndex-based RAG API service."
 readme = "README.md"
 requires-python = ">=3.11,<3.13"
 dependencies = [
+  "openai>=1.0.0",
   "llama-index-core>=0.12.0",
   "llama-index-readers-file>=0.4.0",
   "llama-index-vector-stores-qdrant>=0.4.0",
