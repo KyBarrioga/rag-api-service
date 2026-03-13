@@ -6,13 +6,8 @@ from pathlib import Path
 from openai import OpenAI
 from qdrant_client.models import PointStruct
 
-COLLECTION_NAME = "docs"
-EMBEDDING_MODEL = "BAAI/bge-large-en-v1.5"
-EMBEDDING_SIZE = 1024
 DOCUMENTS_DIR = Path("documents")
-CHUNK_SIZE = 768
-CHUNK_OVERLAP = 80
-
+COLLECTION_NAME = "docs"
 SYSTEM_PROMPT = (
     "You answer questions using only the provided context. "
     "If the answer is not in the context, say you do not have enough information. "
@@ -49,7 +44,7 @@ def main() -> None:
 
         qdrant.upsert(collection_name=COLLECTION_NAME, points=points)
 
-        query = "Can you give me the syntax to create a loop in Python?"
+        query = "When do I use for or while loop?"
         query_embedding = create_embedding(query)
 
         results = qdrant.query_points(
@@ -62,7 +57,7 @@ def main() -> None:
         for i, result in enumerate(results, start=1):
             payload = result.payload
             context_blocks.append(
-                f"""[Source {i}]
+                f"""[Source: {payload.get("source")}]
         file: {payload.get("source")}
         page: {payload.get("page")}
         chunk: {payload.get("chunk")}

@@ -4,11 +4,16 @@ from pathlib import Path
 from llama_index.core import SimpleDirectoryReader
 from llama_index.core.node_parser import SentenceSplitter
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
-from openai import OpenAI
 from qdrant_client import QdrantClient
-from qdrant_client.models import Distance, PointStruct, VectorParams
+from qdrant_client.models import Distance, VectorParams
 
+EMBEDDING_MODEL = "BAAI/bge-large-en-v1.5"
+EMBEDDING_SIZE = 1024
+CHUNK_SIZE = 768
+CHUNK_OVERLAP = 80
+COLLECTION_NAME = "docs"
 embed_model = HuggingFaceEmbedding(model_name=EMBEDDING_MODEL)
+
 
 def get_qdrant_client() -> QdrantClient:
     mode = os.getenv("QDRANT_MODE", "local").strip().lower()
