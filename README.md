@@ -30,3 +30,8 @@ docker run -p 6333:6333 -p 6334:6334 qdrant/qdrant
 $env:QDRANT_MODE="server"
 uv run --env-file .env python .\main\main.py
 ```
+
+TODO:
+- Add reranker when retrieving vector chunks
+- Migrate to Llama Index vector store Qdrant from PointStruct and manual embeddings
+- Dockerize the service
